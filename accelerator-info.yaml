@@ -1,0 +1,38 @@
+id: b7a0fd16-a01f-4601-9b70-04c66128751f
+timestamp: 2023-03-03T20:28:16Z
+accelerator:
+  name: where-for-dinner
+  source:
+    image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:7f68213a0acb4acbdd86a94f4a8a6058548baad4c41a2ecc446461a2cce5c6e2
+fragments:
+  - name: build-wrapper-maven
+    source:
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:195a3ca6585fa91c41292584a19c2807c72ecdf986ce860a7147451e89d467d4
+  - name: tap-workload
+    source:
+      image: registry.tanzu.vmware.com/tanzu-application-platform/tap-packages@sha256:dbf0dedb6848ad8a7704c1c19465a1ddae9039b0e63c1dd0df3e2ed9cbda6093
+options:
+  appSSOName: appsso-where-for-dinner
+  appWorkloadURL: https://where-for-dinner.<UPDATE ME>
+  cacheName: cache-where-for-dinner
+  cacheType: redisCache
+  dbName: db-where-for-dinner
+  dbType: mysql
+  devDefaultAccountPassword: letseat
+  devDefaultAccountUsername: where-for-dinner
+  dynamicCache: true
+  dynamicCacheClass: redis-unmanaged
+  dynamicDBClass: mysql-unmanaged
+  dynamicDatabase: true
+  dynamicMsgBroker: true
+  dynamicMsgBrokerClass: rabbitmq-unmanaged
+  enableCloudEvents: false
+  enableDefaultDevAccount: true
+  enableSecurity: true
+  includeBuildToolWrapper: true
+  msgBrokerType: rabbitmq
+  msgbrokerName: msgbroker-where-for-dinner
+  numRabbitMQClusterNodes: 1
+  projectName: where-for-dinner
+  serviceNamespace: service-instances
+  workloadNamespace: my-apps

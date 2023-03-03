@@ -1,0 +1,44 @@
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: ClientRegistration
+metadata:
+  name: where-for-dinner-client-registration
+  namespace: my-apps
+  labels:
+    services.apps.tanzu.vmware.com/class: clientreg-where-for-dinner
+spec:
+  authServerSelector:
+    matchLabels:
+      name: appsso-where-for-dinner
+  redirectURIs:
+  - https://where-for-dinner.<UPDATE ME>/login/oauth2/code/sso
+  requireUserConsent: false
+  clientAuthenticationMethod: client_secret_basic
+  authorizationGrantTypes:
+  - client_credentials
+  - authorization_code
+  scopes:
+  - name: openid
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaimPolicy
+metadata:
+  name: where-for-dinner-client-registration-cross-namespace
+  namespace: my-apps
+spec:
+  consumingNamespaces:
+  - '*'
+  subject:
+    group: sso.apps.tanzu.vmware.com
+    kind: ClientRegistration
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ResourceClaim
+metadata:
+  name: appsso-where-for-dinner
+  namespace: my-apps
+spec:
+  ref:
+    apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+    kind: ClientRegistration
+    name: where-for-dinner-client-registration
+    namespace: my-apps
